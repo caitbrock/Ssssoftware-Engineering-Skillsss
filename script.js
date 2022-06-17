@@ -15,7 +15,7 @@ const levelDisplay = document.querySelectorAll(".skill"); // Not added yet
 
 // Named Variables
 const width = 20; // # of rows
-let currentBrain = [2, 1, 0]; // HEAD, BODY, TAIL
+let currentBrain = [2, 1, 0]; // head, body, tail
 let brainLocationIndex = 0;
 let skillLocationIndex = 0;
 let direction = 1;
@@ -41,9 +41,9 @@ startGame = () => {
   introBox.style.display = "none";
   alertBoxLose.style.display = "none";
   alertBoxWin.style.display = "none";
-  currentBrain.forEach((index) => boxes[index].classList.remove("brain")); // removing all Brain pieces
-  boxes[skillLocationIndex].style.removeProperty("background-image"); // removing skill images
-  clearInterval(interval); // cancels a timed repeating action
+  currentBrain.forEach((index) => boxes[index].classList.remove("brain")); // remove all Brain pieces
+  boxes[skillLocationIndex].style.removeProperty("background-image"); // remove skill images
+  clearInterval(interval); // cancel timed repeating action
   direction = 1;
   intervalTime = 200;
   currentBrain = [2, 1, 0];
@@ -58,8 +58,8 @@ startGame = () => {
     "url('./img/7. Python.png')",
     "url('./img/8. C++.png')",
   ];
-  currentBrain.forEach((index) => boxes[index].classList.add("brain")); // adding initial Brain
-  interval = setInterval(moveOutcomes, intervalTime); // update moveoutcomes by intervalTime
+  currentBrain.forEach((index) => boxes[index].classList.add("brain")); // add initial Brain state
+  interval = setInterval(moveOutcomes, intervalTime); // update move outcomes by intervalTime
   let i = 0;
   randomSkill();
 };
@@ -67,11 +67,11 @@ startGame = () => {
 moveOutcomes = () => {
   // DEATH CONDITION
   if (
-    (currentBrain[0] + width >= width * width && direction === width) || // HIT BOTTOM
-    (currentBrain[0] % width === width - 1 && direction === 1) || // HIT WALL
-    (currentBrain[0] % width === 0 && direction === -1) || // HIT WALL
-    (currentBrain[0] - width < 0 && direction === -width) || // HIT TOP
-    boxes[currentBrain[0] + direction].classList.contains("brain") // HITS ITSELF
+    (currentBrain[0] + width >= width * width && direction === width) || // hit bottom
+    (currentBrain[0] % width === width - 1 && direction === 1) || // hit wall
+    (currentBrain[0] % width === 0 && direction === -1) || // hit wall
+    (currentBrain[0] - width < 0 && direction === -width) || // hit top
+    boxes[currentBrain[0] + direction].classList.contains("brain") // hit itself
   ) {
     return (
       (overlay.style.display = "block") &&
@@ -92,32 +92,32 @@ moveOutcomes = () => {
   }
 
   // MOVEMENT OF THE BRAIN
-  const brainEnd = currentBrain.pop(); // END IS = TAIL PIECE
-  boxes[brainEnd].classList.remove("brain"); // MOVEMENT OF THE BRAIN
-  currentBrain.unshift(currentBrain[0] + direction); // MOVEMENT IN DIRECTION
+  const brainEnd = currentBrain.pop(); // end is = tail piece
+  boxes[brainEnd].classList.remove("brain"); // remove end styling
+  currentBrain.unshift(currentBrain[0] + direction); // add to front
 
   // AQUIRING SKILL
   if (boxes[currentBrain[0]].style.backgroundImage) {
-    boxes[currentBrain[0]].style.removeProperty("background-image"); // CLEAR SKILL
-    boxes[brainEnd].classList.add("brain"); // ADD CLASS TO STYLE BOX
-    currentBrain.push(brainEnd); // ADD TO TAIL
-    arrayOfSkills.shift(); // REMOVE SKILL FROM ROTATION
-    randomSkill(); // RE-RUN FUNCTION TO GENERATE NEW SKILL
-    clearInterval(interval); // RESETS
-    intervalTime = intervalTime * speed; // INCREASES SPEED
-    interval = setInterval(moveOutcomes, intervalTime); // SETS SPEED WITH MOVEMENT
+    boxes[currentBrain[0]].style.removeProperty("background-image"); // clear skill image
+    boxes[brainEnd].classList.add("brain"); // style tail
+    currentBrain.push(brainEnd); // add to tail
+    arrayOfSkills.shift(); // remove the skill from the rotation
+    randomSkill(); // re-run function
+    clearInterval(interval); // reset
+    intervalTime = intervalTime * speed; // increase spead
+    interval = setInterval(moveOutcomes, intervalTime); // sets spead to move outcome
   }
-  boxes[currentBrain[0]].classList.add("brain"); //ADD TO ARRAY
+  boxes[currentBrain[0]].classList.add("brain"); //add to array of the brain
 };
 
 // Generating Skill
 randomSkill = () => {
-  skillLocationIndex = Math.floor(Math.random() * boxes.length); // RANDOM NUMBER
-  boxes[skillLocationIndex].style.backgroundImage = arrayOfSkills[i];
+  skillLocationIndex = Math.floor(Math.random() * boxes.length); // generate random number
+  boxes[skillLocationIndex].style.backgroundImage = arrayOfSkills[i]; // assign box index of random number an image from array
   if (boxes[skillLocationIndex].classList.contains("brain")) {
-    // ENSURE NO OVERLAP
-    boxes[skillLocationIndex].style.removeProperty("background-image") &&
-      randomSkill();
+    // if location is occupied by a piece of the brain
+    boxes[skillLocationIndex].style.removeProperty("background-image") && //remove the background image and re-run function
+      randomSkill(); // re-run function
   }
 };
 // Control The Brain

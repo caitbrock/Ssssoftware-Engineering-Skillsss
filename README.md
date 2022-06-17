@@ -10,5 +10,3 @@ Photoshop was used to create the graphics used on the page and HTML, CSS and Jav
 GETTING STARTED
 Link: https://pages.git.generalassemb.ly/caitb12/Project-One-Game/
 In order to play the game you will need access to arrow keys to direct your brain (snake) in the appropriate direction to aquire the generated skill. This game would be best played on a computer.
-# Ssssoftware-Engineering-Skillsss
-# Ssssoftware-Engineering-Skillsss
