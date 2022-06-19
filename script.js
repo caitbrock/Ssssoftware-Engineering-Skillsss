@@ -80,7 +80,7 @@ moveOutcomes = () => {
     );
   }
   // Win Condition
-  else if (currentBrain[29]) {
+  else if (currentBrain[28]) {
     return (
       (overlay.style.display = "block") &&
       (alertBoxWin.style.display = "block") &&
