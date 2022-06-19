@@ -10,17 +10,15 @@ const tryAgainButton = document.getElementById("try-again");
 const startGameButton = document.getElementById("start-game");
 const practiceGameButton = document.getElementById("practice");
 const boxes = document.querySelectorAll(".game-board div");
-const levelText = document.querySelectorAll(".skill > h5"); // Not added yet
-const levelDisplay = document.querySelectorAll(".skill"); // Not added yet
 
 // Named Variables
 const width = 20; // # of rows
-let currentBrain = [2, 1, 0]; // head, body, tail
+let currentBrain = [5, 4, 3, 2, 1]; // head, body, tail
 let brainLocationIndex = 0;
 let skillLocationIndex = 0;
 let direction = 1;
 let i = 0;
-let speed = 0.8;
+let speed = 0.9;
 let intervalTime = 0;
 let interval = 0;
 let arrayOfSkills = [
@@ -46,7 +44,7 @@ startGame = () => {
   clearInterval(interval); // cancel timed repeating action
   direction = 1;
   intervalTime = 200;
-  currentBrain = [2, 1, 0];
+  currentBrain = [5, 4, 3, 2, 1];
   brainLocationIndex = 0;
   arrayOfSkills = [
     "url('./img/1. HTML.png')",
@@ -63,9 +61,10 @@ startGame = () => {
   let i = 0;
   randomSkill();
 };
+
 // Outcomes
 moveOutcomes = () => {
-  // DEATH CONDITION
+  // Death Condition
   if (
     (currentBrain[0] + width >= width * width && direction === width) || // hit bottom
     (currentBrain[0] % width === width - 1 && direction === 1) || // hit wall
@@ -80,8 +79,8 @@ moveOutcomes = () => {
       clearInterval(interval)
     );
   }
-  // WIN CONDITION
-  else if (currentBrain[10]) {
+  // Win Condition
+  else if (currentBrain[29]) {
     return (
       (overlay.style.display = "block") &&
       (alertBoxWin.style.display = "block") &&
@@ -91,16 +90,18 @@ moveOutcomes = () => {
     );
   }
 
-  // MOVEMENT OF THE BRAIN
+  // Movement of the Brain
   const brainEnd = currentBrain.pop(); // end is = tail piece
   boxes[brainEnd].classList.remove("brain"); // remove end styling
   currentBrain.unshift(currentBrain[0] + direction); // add to front
 
-  // AQUIRING SKILL
+  // Aquiring a Skill
   if (boxes[currentBrain[0]].style.backgroundImage) {
     boxes[currentBrain[0]].style.removeProperty("background-image"); // clear skill image
     boxes[brainEnd].classList.add("brain"); // style tail
-    currentBrain.push(brainEnd); // add to tail
+    currentBrain.push(brainEnd); // add three to tail
+    currentBrain.push(brainEnd);
+    currentBrain.push(brainEnd);
     arrayOfSkills.shift(); // remove the skill from the rotation
     randomSkill(); // re-run function
     clearInterval(interval); // reset
@@ -120,6 +121,7 @@ randomSkill = () => {
       randomSkill(); // re-run function
   }
 };
+
 // Control The Brain
 function control(e) {
   if (e.keyCode === 37) {
